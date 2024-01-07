@@ -8,9 +8,28 @@ datasource db {
   relationMode = "prisma"
 }
 
-model user {
-  id       Int     @id @default(autoincrement())
-  name     String? @db.VarChar(255)
-  email    String  @unique(map: "User_email_key") @db.VarChar(255)
-  password String  @db.VarChar(255)
+model User {
+  id       Int       @id @default(autoincrement())
+  name     String    @db.VarChar(255)
+  email    String    @unique(map: "User_email_key") @db.VarChar(255)
+  password String    @db.VarChar(255)
+  Product  Product[]
+}
+
+model Product {
+  id          Int    @id @default(autoincrement())
+  title       String @db.VarChar(255)
+  description String @db.Text
+  category    String
+  style       String
+  store       String
+  size        String
+  inventory   Int
+  color       String
+  price       Int
+  images      String @db.VarChar(255)
+  userId      Int
+  User        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
